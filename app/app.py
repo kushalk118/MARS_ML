@@ -31,7 +31,7 @@ st.markdown("""
     /* Sidebar styling */
     section[data-testid="stSidebar"] {
         background-color: #12141c;
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        border-right: 1px solid rgba(1, 1, 1, 0.05);
     }
     
     /* Custom container/card with glassmorphism */
@@ -110,7 +110,7 @@ st.markdown("""
         text-align: center;
     }
 </style>
-""", unsafe_allowed_html=True)
+""", unsafe_allow_html=True)
 
 # Import backend modules
 from src.features import process_file, load_audio
@@ -138,7 +138,7 @@ def load_models():
 rf_model, cnn_model = load_models()
 
 # Sidebar Setup
-st.sidebar.markdown("<div class='center-content'><h1 style='font-size: 1.8rem; color: #ff4b4b; margin-top: 0;'>🎙️ MARS ML</h1><p style='color:#8892b0; font-size:0.85rem;'>Audio Forensic Suite</p></div>", unsafe_allowed_html=True)
+st.sidebar.markdown("<div class='center-content'><h1 style='font-size: 1.8rem; color: #ff4b4b; margin-top: 0;'>🎙️ MARS ML</h1><p style='color:#8892b0; font-size:0.85rem;'>Audio Forensic Suite</p></div>", unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
 st.sidebar.header("⚙️ Model Configuration")
@@ -158,8 +158,8 @@ Our models are trained and verified on the *Fake-or-Real* benchmark dataset:
 """)
 
 # Main Content
-st.markdown("<h1 class='gradient-header'>🎙️ Deepfake Audio Detection Suite</h1>", unsafe_allowed_html=True)
-st.markdown("<p class='subheader-text'>Analyze speech recordings to verify authenticity using machine learning and convolutional neural networks.</p>", unsafe_allowed_html=True)
+st.markdown("<h1 class='gradient-header'>🎙️ Deepfake Audio Detection Suite</h1>", unsafe_allow_html=True)
+st.markdown("<p class='subheader-text'>Analyze speech recordings to verify authenticity using machine learning and convolutional neural networks.</p>", unsafe_allow_html=True)
 
 # Check if model files exist
 models_ready = True
@@ -174,17 +174,17 @@ elif model_choice.startswith("PyTorch CNN") and cnn_model is None:
 col1, col2 = st.columns([1, 1], gap="large")
 
 with col1:
-    st.markdown("<div class='premium-card'>", unsafe_allowed_html=True)
+    st.markdown("<div class='premium-card'>", unsafe_allow_html=True)
     st.subheader("📤 Upload Audio Sample")
     uploaded_file = st.file_uploader(
         "Upload a speech sample in WAV or MP3 format:",
         type=["wav", "mp3"],
         help="WAV files are recommended for higher precision analysis."
     )
-    st.markdown("</div>", unsafe_allowed_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
     
     if uploaded_file is not None and models_ready:
-        st.markdown("<div class='premium-card'>", unsafe_allowed_html=True)
+        st.markdown("<div class='premium-card'>", unsafe_allow_html=True)
         st.subheader("🔊 Play Sample")
         st.audio(uploaded_file, format='audio/wav')
         
@@ -229,7 +229,7 @@ with col1:
                         <h3 style='color: #10b981; margin: 5px 0;'>Human Voice Verified</h3>
                         <p style='margin: 0;'>The voice pattern aligns with authentic biological acoustic properties with <b>{confidence * 100:.2f}%</b> confidence.</p>
                     </div>
-                    """, unsafe_allowed_html=True)
+                    """, unsafe_allow_html=True)
                 else:
                     st.markdown(f"""
                     <div class='deepfake-result'>
@@ -237,10 +237,10 @@ with col1:
                         <h3 style='color: #ef4444; margin: 5px 0;'>AI-Generated Voice Detected</h3>
                         <p style='margin: 0;'>Acoustic analysis detected robotic pitch flattening, phase vocoder anomalies, or synthetic high-frequency patterns with <b>{confidence * 100:.2f}%</b> confidence.</p>
                     </div>
-                    """, unsafe_allowed_html=True)
+                    """, unsafe_allow_html=True)
                 
                 # Show confidence meter
-                st.markdown("<br>", unsafe_allowed_html=True)
+                st.markdown("<br>", unsafe_allow_html=True)
                 st.write("**Confidence Score:**")
                 st.progress(float(confidence))
                 
@@ -248,11 +248,11 @@ with col1:
                 st.error(f"Error analyzing audio: {e}")
                 if os.path.exists(temp_path):
                     os.remove(temp_path)
-        st.markdown("</div>", unsafe_allowed_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
     if uploaded_file is not None and 'y' in locals():
-        st.markdown("<div class='premium-card'>", unsafe_allowed_html=True)
+        st.markdown("<div class='premium-card'>", unsafe_allow_html=True)
         st.subheader("📈 Visual Signal Inspection")
         
         # Plot Waveform
@@ -267,7 +267,7 @@ with col2:
         ax1.tick_params(colors='#8892b0')
         ax1.set_xlabel("Time (s)", color='#8892b0', fontsize=8)
         ax1.set_ylabel("Amplitude", color='#8892b0', fontsize=8)
-        ax1.grid(color='rgba(255,255,255,0.05)', linestyle='--')
+        ax1.grid(color=(1, 1, 1, 0.05), linestyle='--')
         
         # Spectrogram
         # We will use simple scipy spectrogram calculation for robustness
@@ -287,14 +287,14 @@ with col2:
         
         fig.tight_layout()
         st.pyplot(fig)
-        st.markdown("</div>", unsafe_allowed_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
     else:
-        st.markdown("<div class='premium-card' style='height: 100%; display: flex; align-items: center; justify-content: center;'>", unsafe_allowed_html=True)
+        st.markdown("<div class='premium-card' style='height: 100%; display: flex; align-items: center; justify-content: center;'>", unsafe_allow_html=True)
         st.markdown("""
         <div class='center-content'>
             <span style='font-size: 4rem;'>📊</span>
             <h3 style='color: #8892b0; margin-top: 15px;'>Signal Inspection Desk</h3>
             <p style='color: #5d6780; max-width: 300px; font-size: 0.9rem;'>Upload an audio file on the left to display its waveform and acoustic spectrogram here.</p>
         </div>
-        """, unsafe_allowed_html=True)
-        st.markdown("</div>", unsafe_allowed_html=True)
+        """, unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
