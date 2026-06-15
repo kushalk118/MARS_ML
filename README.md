@@ -9,6 +9,9 @@ The system achieves high-performance classification, satisfying the strict requi
 - **Per-Class Accuracy**: &ge; 75%
 
 ---
+Live deployment is not currently hosted. Run locally using:
+
+python -m streamlit run app/app.py
 
 ## 🚀 Key Features
 
