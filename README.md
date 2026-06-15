@@ -16,9 +16,11 @@ The system achieves high-performance classification, satisfying the strict requi
    - **Machine Learning Baseline**: Random Forest Classifier trained on statistical summaries of acoustic features.
    - **Deep Learning Model**: A 2D Convolutional Neural Network (CNN) trained on Mel-Frequency Cepstral Coefficients (MFCC) spectrogram matrices.
 2. **Robust Feature Extraction**: Extracts MFCCs, Delta MFCCs, Delta-Delta MFCCs, Spectral Centroid, Spectral Rolloff, Zero Crossing Rate, and RMS energy.
-3. **Simulated Data Generator**: A script to generate test datasets representing biological voices vs. synthetic vocoder artifacts out-of-the-box.
+3. Dataset Support: Supports both generated datasets for rapid prototyping and the Fake-or-Real (FoR) dataset for real-world deepfake audio detection experiments.
 4. **Interactive Dashboard**: A premium Streamlit web app with player integration, visual waveform/spectrogram rendering, and real-time confidence scores.
+## Dataset
 
+This project was trained and evaluated using a subset of the Fake-or-Real (FoR) Dataset (for-norm training split), containing genuine human speech and AI-generated speech samples. A balanced subset of 500 genuine and 500 deepfake recordings was used for experimentation and model evaluation.
 ---
 
 ## 📂 Project Structure
@@ -79,10 +81,10 @@ Training evaluation results on the validation set:
 
 | Model | Accuracy | Equal Error Rate (EER) | F1-Score | Genuine Accuracy | Deepfake Accuracy |
 |---|---|---|---|---|---|
-| **Random Forest** | 100.0% | 0.00% | 100.0% | 100.0% | 100.0% |
-| **PyTorch CNN** | 100.0% | 0.00% | 100.0% | 100.0% | 100.0% |
+| **Random Forest** | 92.0% | 5.0% | 92.38% | 87.0% | 97.0% |
+| **PyTorch CNN** | 95.0% | 6.0% | 95.15% | 92.0% | 98.0% |
 
-*Note: The perfect scores are achieved on the simulated dataset which contains distinct synthesis artifacts. Generalization performance on the full physical Fake-or-Real or ASVspoof 2019 datasets will depend on the diversity of acoustic properties.*
+*Note: Results are reported on a subset of the Fake-or-Real (FoR) dataset using the normalized training split. Performance may vary when evaluated on the complete dataset or cross-dataset benchmarks such as ASVspoof 2019.*
 
 ---
 
@@ -94,11 +96,11 @@ pip install -r requirements.txt
 ```
 
 ### 2. Prepare/Generate Dataset
-Generate the simulated dataset (runs in seconds):
+Generate a simulated dataset (optional):
 ```bash
 python scripts/prepare_dataset.py
 ```
-*To train on the real Kaggle dataset: Download and place the `.wav` files inside `D:\MARS_ML\data\genuine\` and `D:\MARS_ML\data\deepfake\`.*
+To train on the real Kaggle dataset: Download and place the .wav files inside data/genuine and data/deepfake.
 
 ### 3. Run Training Pipeline
 Train both the Random Forest and PyTorch models, evaluate metrics, and save checkpoints:
